@@ -22,7 +22,7 @@ public class GoodCache9<A,V> implements Computable<A,V> {
 
     @Override
     public V compute(A arg) throws InterruptedException {
-        System.out.println("进入缓存机制");
+        
         while(true){
             Future<V> f = cache.get(arg);
 
@@ -37,7 +37,7 @@ public class GoodCache9<A,V> implements Computable<A,V> {
                 f = cache.putIfAbsent(arg,ft);
                 if(f==null){
                     f = ft;
-                    System.out.println("从FutureTask调用了计算函数");
+                    
                     ft.run();
                 }
 
@@ -80,10 +80,10 @@ public class GoodCache9<A,V> implements Computable<A,V> {
         Future<V> future = cache.get(key);
         if(future!=null){
             if(!future.isDone()){
-                System.out.println("future 任务还没完成就过期，直接取消任务");
+                
                 future.cancel(true);
             }
-            System.out.println("过期时间到");
+           
             cache.remove(key);
         }
     }
@@ -95,7 +95,7 @@ public class GoodCache9<A,V> implements Computable<A,V> {
             public void run() {
                 try{
                     Integer res = cache3.compute("666",5000L);
-                    System.out.println("第一次结果是： "+ res);
+                    System.out.println("The first result is ： "+ res);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -107,7 +107,7 @@ public class GoodCache9<A,V> implements Computable<A,V> {
             public void run() {
                 try{
                     Integer res = cache3.compute("666");
-                    System.out.println("第er次结果是： "+ res);
+                    System.out.println("The second result is： "+ res);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -119,7 +119,7 @@ public class GoodCache9<A,V> implements Computable<A,V> {
             public void run() {
                 try{
                     Integer res = cache3.compute("666");
-                    System.out.println("第san次结果是： "+ res);
+                    System.out.println("The third result is ： "+ res);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
